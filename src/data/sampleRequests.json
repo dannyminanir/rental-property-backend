@@ -1,0 +1,86 @@
+[
+  {
+    "id": 1,
+    "type": "emergency",
+    "description": "I smell strong gas coming from the kitchen and I hear a hissing noise near the stove!",
+    "expected_emergency": true,
+    "language": "en"
+  },
+  {
+    "id": 2,
+    "type": "emergency",
+    "description": "There are sparks and smoke shooting out of the main electrical wall socket in the living room!",
+    "expected_emergency": true,
+    "language": "en"
+  },
+  {
+    "id": 3,
+    "type": "emergency",
+    "description": "Main water pipe burst in the bathroom ceiling, water is pouring like a waterfall and the apartment is flooding quickly.",
+    "expected_emergency": true,
+    "language": "en"
+  },
+  {
+    "id": 4,
+    "type": "urgent",
+    "description": "The front door lock is completely jammed from the outside and will not lock. Anyone can push it open.",
+    "expected_emergency": false,
+    "language": "en"
+  },
+  {
+    "id": 5,
+    "type": "urgent",
+    "description": "Water is leaking under the kitchen sink and the floor is wet whenever the tap runs.",
+    "expected_emergency": false,
+    "language": "en"
+  },
+  {
+    "id": 6,
+    "type": "minor",
+    "description": "One of the bedroom light bulbs keeps flickering intermittently.",
+    "expected_emergency": false,
+    "language": "en"
+  },
+  {
+    "id": 7,
+    "type": "minor",
+    "description": "The bathroom door handle is a bit loose and squeaks when turned.",
+    "expected_emergency": false,
+    "language": "en"
+  },
+  {
+    "id": 8,
+    "type": "vague",
+    "description": "Something is wrong with the door.",
+    "expected_emergency": false,
+    "language": "en"
+  },
+  {
+    "id": 9,
+    "type": "vague",
+    "description": "The kitchen thing is not working today, please check.",
+    "expected_emergency": false,
+    "language": "en"
+  },
+  {
+    "id": 10,
+    "type": "kinyarwanda_emergency",
+    "description": "Hari umwotsi n'ibirimi by'umuriro birimo gusohoka mu nsinga z'amashanyarazi mu cyumba cyanjye!",
+    "expected_emergency": true,
+    "language": "rw"
+  },
+  {
+    "id": 11,
+    "type": "kinyarwanda_urgent",
+    "description": "Amazi menshi arimo kumeneka munsi y'urugi rw'ubwogero, hasi hose huzuye amazi.",
+    "expected_emergency": false,
+    "language": "rw"
+  },
+  {
+    "id": 12,
+    "type": "kinyarwanda_minor",
+    "description": "Urugi rw'idirishya ntirufunga neza iyo umuyaga uhushye.",
+    "expected_emergency": false,
+    "language": "rw"
+  }
+]
