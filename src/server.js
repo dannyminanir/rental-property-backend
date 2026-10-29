@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
+const connectDB = require('./config/db');
 
 dotenv.config();
 
@@ -20,8 +21,9 @@ app.get('/api/health', (req, res) => {
   });
 });
 
+app.use('/api/auth', require('./routes/authRoutes'));
+
 // Route modules placeholders (to be expanded per feature area):
-// app.use('/api/auth', require('./routes/authRoutes'));
 // app.use('/api/properties', require('./routes/propertyRoutes'));
 // app.use('/api/rent', require('./routes/rentRoutes'));
 // app.use('/api/maintenance', require('./routes/maintenanceRoutes'));
@@ -40,6 +42,8 @@ app.use((err, req, res, next) => {
   });
 });
 
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
+connectDB().then(() => {
+  app.listen(PORT, () => {
+    console.log(`🚀 Server running on http://localhost:${PORT}`);
+  });
 });
