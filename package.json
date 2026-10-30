@@ -2,14 +2,20 @@
   "name": "rental-property-backend",
   "version": "1.0.0",
   "description": "Backend API for Rental Property & Tenant Manager with AI Maintenance Triage (Group 5)",
-  "main": "src/server.js",
+  "main": "dist/server.js",
   "scripts": {
-    "start": "node src/server.js",
-    "dev": "nodemon src/server.js",
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "dev": "tsx watch src/server.ts",
     "seed:admin": "node src/scripts/seedAdmin.js",
     "test:ai": "node src/scripts/testAiTriage.js"
   },
-  "keywords": ["rental-manager", "ai-triage", "express", "group-5"],
+  "keywords": [
+    "rental-manager",
+    "ai-triage",
+    "express",
+    "group-5"
+  ],
   "author": "Group 5 (Gisubizo Nice, Minani Daniel, Marie Noella Gasana Urumuri, Freddy Rudasingwa)",
   "license": "ISC",
   "dependencies": {
@@ -25,6 +31,13 @@
     "uuid": "^9.0.1"
   },
   "devDependencies": {
-    "nodemon": "^3.1.0"
+    "@types/bcryptjs": "^2.4.6",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/jsonwebtoken": "^9.0.6",
+    "@types/node": "^22.10.2",
+    "@types/uuid": "^10.0.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
   }
 }

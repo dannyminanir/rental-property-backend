@@ -22,8 +22,8 @@ rental-property-backend/
 │   ├── models/              # Database models (User, Unit, Lease, etc.)
 │   ├── routes/              # Express API route endpoints
 │   ├── services/
-│   │   └── aiTriageService.js   # LLM maintenance triage logic
-│   └── server.js            # Entry point
+│   │   └── aiTriageService.ts   # LLM maintenance triage logic
+│   └── server.ts            # Entry point
 ├── .env.example             # Template for environment variables
 ├── .gitignore               # Ignores node_modules and .env
 ├── package.json
@@ -48,6 +48,11 @@ rental-property-backend/
 ### 1. Install dependencies
 ```bash
 npm install
+```
+
+### Build TypeScript
+```bash
+npm run build
 ```
 
 ### 2. Configure Environment Variables

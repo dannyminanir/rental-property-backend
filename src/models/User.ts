@@ -1,7 +1,18 @@
-const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
+import mongoose, { Document } from 'mongoose';
+import bcrypt from 'bcryptjs';
 
-const userSchema = new mongoose.Schema(
+export interface UserDocument extends Document {
+  name: string;
+  email: string;
+  password: string;
+  role: 'admin' | 'landlord' | 'tenant';
+  isApproved: boolean;
+  isBlocked: boolean;
+  blockReason: string | null;
+  comparePassword(candidate: string): Promise<boolean>;
+}
+
+const userSchema = new mongoose.Schema<UserDocument>(
   {
     name: {
       type: String,
@@ -47,8 +58,10 @@ userSchema.pre('save', async function hashPassword() {
   this.password = await bcrypt.hash(this.password, 12);
 });
 
-userSchema.methods.comparePassword = function comparePassword(candidate) {
+userSchema.methods.comparePassword = function comparePassword(candidate: string) {
   return bcrypt.compare(candidate, this.password);
 };
 
-module.exports = mongoose.model('User', userSchema);
+const User = mongoose.model<UserDocument>('User', userSchema);
+
+export default User;

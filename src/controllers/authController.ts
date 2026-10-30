@@ -1,18 +1,29 @@
-const jwt = require('jsonwebtoken');
-const { v4: uuidv4 } = require('uuid');
-const User = require('../models/User');
+import jwt, { SignOptions } from 'jsonwebtoken';
+import { v4 as uuidv4 } from 'uuid';
+import { NextFunction, Request, Response } from 'express';
+import User, { UserDocument } from '../models/User';
+
+interface AuthenticatedRequest extends Request {
+  user: UserDocument;
+}
 
 // Helper: generate JWT
-const generateToken = (id) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRES_IN || '7d',
+const generateToken = (id: UserDocument['_id']): string => {
+  const secret = process.env.JWT_SECRET;
+  if (!secret) {
+    throw new Error('JWT_SECRET must be set');
+  }
+  const expiresIn = (process.env.JWT_EXPIRES_IN || '7d') as SignOptions['expiresIn'];
+
+  return jwt.sign({ id: id.toString() }, secret, {
+    expiresIn,
   });
 };
 
 // ──────────────────────────────────────────────
 // POST /api/auth/register  (landlord sign-up)
 // ──────────────────────────────────────────────
-exports.register = async (req, res, next) => {
+export const register = async (req: Request, res: Response, next: NextFunction): Promise<Response | void> => {
   try {
     const body = req.body || {};
     const { name, password } = body;
@@ -54,7 +65,7 @@ exports.register = async (req, res, next) => {
       },
     });
   } catch (error) {
-    if (error.code === 11000) {
+    if (typeof error === 'object' && error !== null && 'code' in error && error.code === 11000) {
       return res.status(409).json({ error: 'Email already registered' });
     }
     next(error);
@@ -64,7 +75,7 @@ exports.register = async (req, res, next) => {
 // ──────────────────────────────────────────────
 // POST /api/auth/login
 // ──────────────────────────────────────────────
-exports.login = async (req, res, next) => {
+export const login = async (req: Request, res: Response, next: NextFunction): Promise<Response | void> => {
   try {
     const { email, password } = req.body;
 
@@ -115,7 +126,7 @@ exports.login = async (req, res, next) => {
 // ──────────────────────────────────────────────
 // GET /api/auth/me  (get current logged-in user)
 // ──────────────────────────────────────────────
-exports.getMe = async (req, res, next) => {
+export const getMe = async (req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<Response | void> => {
   try {
     res.json({
       user: {
@@ -134,7 +145,7 @@ exports.getMe = async (req, res, next) => {
 // ──────────────────────────────────────────────
 // POST /api/auth/invite  (landlord invites a tenant)
 // ──────────────────────────────────────────────
-exports.createInvite = async (req, res, next) => {
+export const createInvite = async (req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<Response | void> => {
   try {
     const Unit = require('../models/Unit');
     const Invite = require('../models/Invite');
@@ -182,7 +193,7 @@ exports.createInvite = async (req, res, next) => {
 // ──────────────────────────────────────────────
 // POST /api/auth/invite/:token  (tenant registers via invite)
 // ──────────────────────────────────────────────
-exports.registerWithInvite = async (req, res, next) => {
+export const registerWithInvite = async (req: Request, res: Response, next: NextFunction): Promise<Response | void> => {
   try {
     const Invite = require('../models/Invite');
     const Lease = require('../models/Lease');
@@ -251,7 +262,7 @@ exports.registerWithInvite = async (req, res, next) => {
 // ──────────────────────────────────────────────
 // GET /api/auth/invite/:token  (validate invite)
 // ──────────────────────────────────────────────
-exports.validateInvite = async (req, res, next) => {
+export const validateInvite = async (req: Request, res: Response, next: NextFunction): Promise<Response | void> => {
   try {
     const Invite = require('../models/Invite');
     const invite = await Invite.findOne({ token: req.params.token })
